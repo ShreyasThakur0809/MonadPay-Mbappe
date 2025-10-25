@@ -1,11 +1,11 @@
 import { TokenInfo, ContractAddresses } from './types';
 
-// Your deployed contract addresses
+// V2 Contract Addresses (NEW - with advanced features)
 export const CONTRACT_ADDRESSES: ContractAddresses = {
-  processor: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x71065d406B5Ee090A98AE00ef197a23Bf9cD1b64',
+  processor: '0x6b49B76C7C18Dae32F4A8F00F78787C43955e0ED', // V2 with expiration + batch
   tokens: {
-    USDC: process.env.NEXT_PUBLIC_USDC_ADDRESS || '0xd9C73AF78191Be2C3088FB8755a3374779E3c727',
-    USDT: process.env.NEXT_PUBLIC_USDT_ADDRESS || '0x9487B62cE77FCA8BBa0152642E085FF716e1e876',
+    USDC: '0x6B2Aeb008CD4a052aa3eA374Fa9Fa327946E857F',
+    USDT: '0x54F413dE692C18e87265c7108e0F81d25F3BFc60',
   },
 };
 
@@ -31,8 +31,9 @@ export const SUPPORTED_TOKENS: Record<string, TokenInfo> = {
   },
 };
 
-// MonadPayProcessor ABI (simplified - your teammate will use full ABI from contracts-abi.json)
+// MonadPayProcessor V2 ABI (with NEW features)
 export const PROCESSOR_ABI = [
+  // ========== STANDARD PAYMENTS ==========
   {
     "inputs": [
       { "internalType": "address payable", "name": "to", "type": "address" },
@@ -57,6 +58,101 @@ export const PROCESSOR_ABI = [
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  
+  // ========== PAYMENT REQUESTS (NEW - with expiration) ==========
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "address", "name": "token", "type": "address" },
+      { "internalType": "string", "name": "label", "type": "string" },
+      { "internalType": "string", "name": "memo", "type": "string" },
+      { "internalType": "uint256", "name": "expiryDuration", "type": "uint256" }
+    ],
+    "name": "createPaymentRequest",
+    "outputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
+    "name": "payPaymentRequest",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
+    "name": "getPaymentRequest",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "payee", "type": "address" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "string", "name": "label", "type": "string" },
+          { "internalType": "string", "name": "memo", "type": "string" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "uint256", "name": "expiresAt", "type": "uint256" },
+          { "internalType": "bool", "name": "completed", "type": "bool" },
+          { "internalType": "bool", "name": "expired", "type": "bool" }
+        ],
+        "internalType": "struct MonadPayProcessor.PaymentRequest",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  
+  // ========== BATCH PAYMENTS (NEW) ==========
+  {
+    "inputs": [
+      { "internalType": "address[]", "name": "recipients", "type": "address[]" },
+      { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
+      { "internalType": "string", "name": "label", "type": "string" }
+    ],
+    "name": "processBatchPayment",
+    "outputs": [{ "internalType": "bytes32", "name": "batchId", "type": "bytes32" }],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address[]", "name": "recipients", "type": "address[]" },
+      { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
+      { "internalType": "address", "name": "token", "type": "address" },
+      { "internalType": "string", "name": "label", "type": "string" }
+    ],
+    "name": "processBatchTokenPayment",
+    "outputs": [{ "internalType": "bytes32", "name": "batchId", "type": "bytes32" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "batchId", "type": "bytes32" }],
+    "name": "getBatchPayment",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "from", "type": "address" },
+          { "internalType": "address[]", "name": "recipients", "type": "address[]" },
+          { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "string", "name": "label", "type": "string" },
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
+          { "internalType": "bool", "name": "processed", "type": "bool" }
+        ],
+        "internalType": "struct MonadPayProcessor.BatchPayment",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  
+  // ========== QUERY FUNCTIONS ==========
   {
     "inputs": [{ "internalType": "bytes32", "name": "paymentId", "type": "bytes32" }],
     "name": "getPaymentDetails",
@@ -83,6 +179,20 @@ export const PROCESSOR_ABI = [
   {
     "inputs": [],
     "name": "getTotalPayments",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalPaymentRequests",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalBatchPayments",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
