@@ -113,15 +113,15 @@ export default function CreatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">M</span>
             </div>
-            <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold text-primary">
               MonadPay
             </span>
           </Link>
@@ -232,13 +232,6 @@ export default function CreatePage() {
                 >
                   Generate Payment Link
                 </Button>
-
-                {/* V2 Badge */}
-                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                  <div className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-md font-medium">
-                    Powered by MonadPay V2
-                  </div>
-                </div>
               </CardContent>
             </Card>
 

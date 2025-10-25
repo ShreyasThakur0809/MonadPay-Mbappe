@@ -7,15 +7,15 @@ import { Zap, QrCode, Shield, ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">M</span>
             </div>
-            <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-xl text-primary font-bold">
               MonadPay
             </span>
           </div>
@@ -30,13 +30,13 @@ export default function Home() {
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="inline-block">
-            <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium">
-              ⚡ Powered by Monad
+            <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
+              Powered by Monad
             </span>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-primary font-bold">
               Crypto Payments
             </span>
             <br />
@@ -77,8 +77,8 @@ export default function Home() {
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center mb-4">
-              <QrCode className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
+              <QrCode className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-xl font-semibold mb-2">QR Code Support</h3>
             <p className="text-muted-foreground">
@@ -87,8 +87,8 @@ export default function Home() {
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
-              <Shield className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
+              <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-xl font-semibold mb-2">Secure & Trustless</h3>
             <p className="text-muted-foreground">
@@ -100,7 +100,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20">
-        <Card className="p-12 text-center bg-linear-to-br from-blue-600 to-indigo-600 text-white border-0">
+        <Card className="p-12 text-center bg-primary text-white border-0">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to get started?
           </h2>
@@ -119,7 +119,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t py-8 mt-20">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>Built with ❤️ on Monad • MonadPay V2</p>
+          <p>Built on Monad</p>
         </div>
       </footer>
     </div>
